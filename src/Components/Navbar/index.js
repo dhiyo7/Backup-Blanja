@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 
-import { Navbar, FormControl, Form, Button } from "react-bootstrap";
+import {
+  InputGroup,
+  Navbar,
+  FormControl,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faFilter } from "@fortawesome/free-solid-svg-icons";
-import * as styles from "./style.js";
+import "./style.css";
 
 export default class Navbarr extends Component {
   render() {
     return (
-      <div className="">
-        <Navbar
-          fixed="top"
-          className="container"
-          style={styles.style.navbarBlanja}
-        >
+      <header className="">
+        <Navbar fixed="top" className="container" bg="white">
           <Navbar.Brand href="#home">
             <img
               src="https://res.cloudinary.com/devloops7/image/upload/v1606499947/newBlanja/VectorlogoBesar_vobugk.png"
@@ -22,21 +22,31 @@ export default class Navbarr extends Component {
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
-            <Navbar.Text style={styles.style.textNavbar}>Blanja</Navbar.Text>
+            <Navbar.Text className="textNavbar" style={{color: 'red'}}>Blanja</Navbar.Text>
           </Navbar.Brand>
           <Navbar.Toggle />
-          <div className="d-flex justify-content-end ml-5">
-            <Form>
+          <div className="input-search d-flex justify-content-end ml-5">
+            <InputGroup className="inline ">
               <FormControl
-                style={styles.style.formSearching}
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="basic-addon2"
+              />
+              <InputGroup.Append className="mr-2">
+              <FontAwesomeIcon className="icon-search " icon={faSearch} />
+              </InputGroup.Append>
+            </InputGroup>
+            {/* <Form className="inline input-search">
+              <FormControl
+                className="input-search"
                 placeholder="Search"
               ></FormControl>
             </Form>
-            <FontAwesomeIcon icon={faSearch} style={styles.style.iconSearch} />
+            <FontAwesomeIcon className="icon-search" icon={faSearch} /> */}
           </div>
-          <Button style={styles.style.btnFilter} className="">
+          <div className="icon-filter">
             <FontAwesomeIcon icon={faFilter} />
-          </Button>
+          </div>
           <Navbar.Collapse className="justify-content-end">
             <img
               src={
@@ -45,11 +55,53 @@ export default class Navbarr extends Component {
               style={{ marginRight: "40px" }}
               alt=""
             />
-            <Button style={styles.style.btnLogin}>Login</Button>
-            <Button style={styles.style.btnSignUp}>Signup</Button>
+            <div className="btn-login-nav">Login</div>
+            <div className="btn-signup-nav">Signup</div>
           </Navbar.Collapse>
         </Navbar>
-      </div>
+      </header>
+
+      // <Container>
+      //   <nav className="navbar fixed-top mx-auto">
+      //     <div className="nav-logo">
+      //       <a className="navbar-brand d-flex align-items-center" href="">
+      //         <img
+      //           src="https://res.cloudinary.com/devloops7/image/upload/v1606499947/newBlanja/VectorlogoBesar_vobugk.png"
+      //           className="d-inline-block align-top"
+      //           alt
+      //         />
+      //         <span className="font-logo">Blanja</span>
+      //       </a>
+      //     </div>
+      //     <form className="form-inline">
+      //       <div className="input-search">
+      //         <i className="fa fa-search icon-search"></i>
+      //         <input
+      //           type="text"
+      //           className="input-search-field"
+      //           placeholder="Search"
+      //         />
+      //       </div>
+      //       <div className="icon-filter">
+      //         <i className="fa fa-filter"></i>
+      //       </div>
+      //     </form>
+      //     <div className="icon-cart right-0">
+      //       <img src="./src/images/cart.png" alt srcset />
+      //     </div>
+      //     <i
+      //       className="fa fa-sign-in"
+      //       style="font-size:28px"
+      //       aria-hidden="true"
+      //     ></i>
+      //     <a href="login.html" className="btn-login-nav">
+      //       Login
+      //     </a>
+      //     <a href="register.html" className="btn-signup-nav">
+      //       Sign Up
+      //     </a>
+      //   </nav>
+      // </Container>
     );
   }
 }
