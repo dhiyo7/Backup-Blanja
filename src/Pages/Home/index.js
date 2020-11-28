@@ -1,10 +1,8 @@
-import React, { Component } from 'react'
-import Navbar from '../../Components/Navbar'
-import {Text} from 'react-bootstrap'
+import React, { Component } from "react";
+import Carousel from "../../Components/Carousel";
 
 export default class Home extends Component {
-    render() {
-        return (
-        )
-    }
+  render() {
+    return <Carousel />;
+  }
 }
