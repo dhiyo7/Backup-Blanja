@@ -11,7 +11,8 @@ export default class index extends Component {
 
   getAllCategories = () => {
     axios
-      .get("http://localhost:8005/categories")
+      .get(" https://2994f0665bef.ngrok.io/categories")
+      // .get("http://localhost:8005/categories")
       .then((res) => {
         const categories = res.data.data;
         this.setState({ categories });
