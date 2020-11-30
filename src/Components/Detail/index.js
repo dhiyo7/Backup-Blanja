@@ -7,24 +7,31 @@ import "./style.css";
 
 export default class Detail extends Component {
   render() {
+    const {
+      category,
+      conditions,
+      description,
+      name,
+      photo,
+      price,
+      qty,
+      size,
+      index,
+    } = this.props;
     return (
       <Container className="main">
         <p className="font-p-title">
-          Home {'>'} category {'>'} <b>T-Shirt</b>
+          Home {">"} category {">"} <b>T-Shirt</b>
         </p>
-        <div className="row">
+        <div className="row" key={index}>
           <div className="col-sm-4">
-            <img
-              src="https://res.cloudinary.com/devloops7/image/upload/v1606663570/newBlanja/T-shirt_ikcavv.png"
-              alt="img"
-              className="rounded img-fluid"
-            />
+            <img src={photo} alt="img" className="rounded img-fluid" />
             <div className="mt-3 more-images">
               <ul className="horizontal-list">
                 <li>
                   <a href>
                     <img
-                      src="https://res.cloudinary.com/devloops7/image/upload/v1606663570/newBlanja/T-shirt_ikcavv.png"
+                      src={photo}
                       alt="img"
                       className="rounded small-images"
                     />
@@ -33,7 +40,7 @@ export default class Detail extends Component {
                 <li>
                   <a href>
                     <img
-                      src="https://res.cloudinary.com/devloops7/image/upload/v1606663570/newBlanja/T-shirt_ikcavv.png"
+                      src={photo}
                       alt="img"
                       className="rounded small-images"
                     />
@@ -42,7 +49,7 @@ export default class Detail extends Component {
                 <li>
                   <a href>
                     <img
-                      src="https://res.cloudinary.com/devloops7/image/upload/v1606663570/newBlanja/T-shirt_ikcavv.png"
+                      src={photo}
                       alt="img"
                       className="rounded small-images"
                     />
@@ -51,7 +58,7 @@ export default class Detail extends Component {
                 <li>
                   <a href>
                     <img
-                      src="https://res.cloudinary.com/devloops7/image/upload/v1606663570/newBlanja/T-shirt_ikcavv.png"
+                      src={photo}
                       alt="img"
                       className="rounded small-images"
                     />
@@ -60,7 +67,7 @@ export default class Detail extends Component {
                 <li>
                   <a href>
                     <img
-                      src="https://res.cloudinary.com/devloops7/image/upload/v1606663570/newBlanja/T-shirt_ikcavv.png"
+                      src={photo}
                       alt="img"
                       className="rounded small-images"
                     />
@@ -70,23 +77,23 @@ export default class Detail extends Component {
             </div>
           </div>
           <div className="col-sm-8">
-            <h3>Baju Muslim Pria</h3>
+            <h3>{name}</h3>
             <p className="font-p-title ml-1">
-              <b>Zalora Cloth</b>
+              <b>{category}</b>
             </p>
             <div className="rating mt-n2 ml-1">
-            <FontAwesomeIcon className="bintang" icon={faStar} />
-            <FontAwesomeIcon className="bintang" icon={faStar} />
-            <FontAwesomeIcon className="bintang" icon={faStar} />
-            <FontAwesomeIcon className="bintang" icon={faStar} />
-            <FontAwesomeIcon className="bintang" icon={faStar} />
+              <FontAwesomeIcon className="bintang" icon={faStar} />
+              <FontAwesomeIcon className="bintang" icon={faStar} />
+              <FontAwesomeIcon className="bintang" icon={faStar} />
+              <FontAwesomeIcon className="bintang" icon={faStar} />
+              <FontAwesomeIcon className="bintang" icon={faStar} />
               <span>(5)</span>
             </div>
             <p className="font-p-title ml-1 mt-3">
               <b>Price</b>
             </p>
             <h2 className="mt-n3">
-              <b>$ 20.0</b>
+              <b>{price}</b>
             </h2>
             <p className="font-p-title ml-1 mt-3 text-dark">
               <b>Color</b>
@@ -119,15 +126,15 @@ export default class Detail extends Component {
                 <ul className="horizontal-list d-flex justify-center">
                   <li>
                     <span className="color-selected rounded-circle bg-secondary">
-                    <FontAwesomeIcon className="minus" icon={faMinus} />
+                      <FontAwesomeIcon className="minus" icon={faMinus} />
                     </span>
                   </li>
                   <li style={{ margin: "0.9rem 1rem" }}>
-                    <span>28</span>
+                    <span>{size}</span>
                   </li>
                   <li>
                     <span className="color-selected rounded-circle">
-                    <FontAwesomeIcon className="plus" icon={faPlus} />
+                      <FontAwesomeIcon className="plus" icon={faPlus} />
                     </span>
                   </li>
                 </ul>
@@ -139,15 +146,15 @@ export default class Detail extends Component {
                 <ul className="horizontal-list d-flex justify-center">
                   <li>
                     <span className="color-selected rounded-circle bg-secondary">
-                    <FontAwesomeIcon className="minus" icon={faMinus} />
+                      <FontAwesomeIcon className="minus" icon={faMinus} />
                     </span>
                   </li>
                   <li style={{ margin: "0.9rem 1rem" }}>
-                    <span>1</span>
+                    <span>{qty}</span>
                   </li>
                   <li>
                     <span className="color-selected rounded-circle">
-                    <FontAwesomeIcon className="plus" icon={faPlus} />
+                      <FontAwesomeIcon className="plus" icon={faPlus} />
                     </span>
                   </li>
                 </ul>
@@ -173,33 +180,17 @@ export default class Detail extends Component {
             <b>Condition</b>
           </p>
           <p className="mt-n3 text-danger">
-            <b>New</b>
+            <b>{conditions}</b>
           </p>
           <p className="mt-4 text-dark">
             <b>Description</b>
           </p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <p>
-            Donec non magna rutrum, pellentesque augue eu, sagittis velit.
-            Phasellus quis laoreet dolor. Fusce nec pharetra quam. Interdum et
-            malesuada fames ac ante ipsum primis in faucibus. Praesent sed enim
-            vel turpis blandit imperdiet ac ac felis. Etiam tincidunt tristique
-            placerat. Pellentesque a consequat mauris, vel suscipit ipsum. Donec
-            ac mauris vitae diam commodo vehicula. Donec quam elit, sollicitudin
-            eu nisl at, ornare suscipit magna.
-          </p>
-          <p>
-            Donec non magna rutrum, pellentesque augue eu, sagittis velit.
-            Phasellus quis laoreet dolor. Fusce nec pharetra quam. Interdum et
-            malesuada fames ac ante ipsum primis in faucibus. Praesent sed enim
-            vel turpis blandit imperdiet ac ac felis.
-          </p>
-          <p>In ultricies rutrum tempus. Mauris vel molestie orci.</p>
+          <p>{description}</p>
         </div>
         <h2>Product Review</h2>
 
         <Container style={{ marginBottom: "70px" }}>
-          <div className="row">
+          <div className="row" key={index}>
             <div className="col-md-3 align-item-center justify-content-center">
               <h1 className="display-1 d-inline">
                 <b>5.0</b>
@@ -288,7 +279,7 @@ export default class Detail extends Component {
             </div>
           </div>
         </Container>
-        
+
         {/* Menu Bottom */}
         <div className="btn d-flex d-lg-none">
           <a href className="btnBtm btn-chart mt-2">

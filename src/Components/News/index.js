@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import "./style.css";
 
 import axios from "axios";
@@ -11,7 +12,7 @@ export default class Catalog extends Component {
   };
 
   getAllNewsProducts = () => {
-    const url = "https://2994f0665bef.ngrok.io/sorting?keyword=";
+    const url = " https://a98489921bc3.ngrok.io/sorting?keyword=";
     axios
       .get(url + "created_at DESC")
       .then((res) => {
@@ -43,24 +44,26 @@ export default class Catalog extends Component {
         </div>
 
         <div className="row-catalog">
-          {this.state.productsNews.map((productNew, id) => {
+          {this.state.productsNews.map((productNew, id, ) => {
             return (
               <div key={id} className="card card-catalog">
-                <img
-                  src={productNew.product_photo}
-                  alt=""
-                  className="card-img-top img-news"
-                  width="238"
-                  height="136"
-                />
-                <div className="card-body">
-                  <p className="card-catalog-title">
-                    {productNew.product_name}
-                  </p>
-                  <p className="card-catalog-price">
-                    {productNew.product_price}
-                  </p>
-                </div>
+                <Link to={`/detail/${productNew.id}`}>
+                  <img
+                    src={productNew.product_photo}
+                    alt=""
+                    className="card-img-top img-news"
+                    width="238"
+                    height="136"
+                  />
+                  <div className="card-body">
+                    <p className="card-catalog-title">
+                      {productNew.product_name}
+                    </p>
+                    <p className="card-catalog-price">
+                      {productNew.product_price}
+                    </p>
+                  </div>
+                </Link>
               </div>
             );
           })}
