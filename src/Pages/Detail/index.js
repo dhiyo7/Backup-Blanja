@@ -3,8 +3,8 @@ import Navbar from "../../Components/Navbar";
 import Details from "../../Components/Detail";
 import axios from "axios";
 
-const url = 'https://b2bd74521743.ngrok.io/products/'
-// const url = " http://localhost:8005/products/";
+// const url = 'https://b2bd74521743.ngrok.io/products/'
+const url = " http://localhost:8005/products/";
 
 export default class Detail extends Component {
   state = {

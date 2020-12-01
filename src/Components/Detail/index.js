@@ -180,7 +180,7 @@ export default class Detail extends Component {
                 </ul>
               </div>
             </div>
-            <div className=" d-flex justify-content-between">
+            <div className="btnGrup d-flex justify-content-between">
               <a href className="btnGrup btn-chart mt-2">
                 Chart
               </a>
@@ -189,7 +189,7 @@ export default class Detail extends Component {
               </a>
               <Link
                 to="/mybag"
-                className="btnBtm btn-buy mt-2"
+                className="btnGrup btn-buy mt-2"
                 onClick={this.handleBag}
               >
                 Buy Now
