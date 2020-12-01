@@ -3,8 +3,8 @@ import Navbar from "../../Components/Navbar";
 import Details from "../../Components/Detail";
 import axios from "axios";
 
-// const url = ' https://a98489921bc3.ngrok.io/products/'
-const url = " http://localhost:8005/products/";
+const url = 'https://b2bd74521743.ngrok.io/products/'
+// const url = " http://localhost:8005/products/";
 
 export default class Detail extends Component {
   state = {
@@ -19,7 +19,7 @@ export default class Detail extends Component {
       .then((res) => {
         const singleProduct = res.data.data;
         this.setState({ singleProduct });
-        console.log(singleProduct);
+        // console.log(singleProduct);
       })
       .catch((err) => console.log(err));
   };
@@ -29,12 +29,13 @@ export default class Detail extends Component {
   }
 
   render() {
-    console.log(this.state.singleProduct);
+    // console.log(this.state.singleProduct);
 
     return (
       <>
         <Navbar />
         <Details
+          product={this.state.singleProduct.id}  
           category={this.state.singleProduct.category_name}
           colorHex={this.state.singleProduct.color_hexa}
           conditions={this.state.singleProduct.conditions}

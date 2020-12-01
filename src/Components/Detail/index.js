@@ -3,9 +3,29 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./style.css";
 
 export default class Detail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      size: 0,
+      qty: 0,
+    };
+
+    this.handleBag = this.handleBag.bind(this);
+  }
+
+  handleBag = () => {
+    // console.log(this.props)
+    localStorage.setItem("photo", this.props.photo);
+    localStorage.setItem("name", this.props.name);
+    localStorage.setItem("qty", this.props.qty);
+    localStorage.setItem("price", this.props.price);
+    localStorage.setItem("id", this.props.product)
+  };
+
   render() {
     const {
       category,
@@ -167,9 +187,13 @@ export default class Detail extends Component {
               <a href className="btnGrup btn-add-bag mt-2">
                 Add bag
               </a>
-              <a href className="btnGrup btn-buy mt-2">
+              <Link
+                to="/mybag"
+                className="btnBtm btn-buy mt-2"
+                onClick={this.handleBag}
+              >
                 Buy Now
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -288,9 +312,14 @@ export default class Detail extends Component {
           <a href className="btnBtm btn-add-bag mt-2">
             Add bag
           </a>
-          <a href className="btnBtm btn-buy mt-2">
-            Buy Now
-          </a>
+          <Link
+            to="/mybag"
+            className="btnBtm btn-buy mt-2"
+            onClick={this.handleBag}
+          >
+            {" "}
+            Buy Now{" "}
+          </Link>
         </div>
       </Container>
     );

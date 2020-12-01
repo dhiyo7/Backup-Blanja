@@ -2,10 +2,43 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import "./style.css";
 
 export default class Mybag extends Component {
+  constructor(props) {
+    super(props);
+    this.handleBuy = this.handleBuy.bind(this);
+  }
+
+  handleBuy = () => {
+    const url = "https://b2bd74521743.ngrok.io/history";
+    const rand = 1 + Math.random() * (999 - 1);
+    axios
+      .post(url, {
+        transaction_code: rand,
+        product_id: localStorage.getItem("id"),
+        qty: localStorage.getItem("qty"),
+        total: localStorage.getItem("price"),
+      })
+      .then((res) => {
+        console.log(res);
+        localStorage.removeItem("id");
+        localStorage.removeItem("name");
+        localStorage.removeItem("photo");
+        localStorage.removeItem("qty");
+        localStorage.removeItem("price");
+      })
+      .catch((err) => console.log(err));
+  };
+
   render() {
+    const name = localStorage.getItem("name");
+    const qty = localStorage.getItem("qty");
+    const price = localStorage.getItem("price");
+    const photo = localStorage.getItem("photo");
+
     return (
       <Container className="main">
         <div className="container" style={{ marginTop: "120px" }}>
@@ -69,7 +102,7 @@ export default class Mybag extends Component {
                   </div>
                   <div className="col-md-2 d-flex justify-center">
                     <img
-                      src="https://res.cloudinary.com/devloops7/image/upload/v1606663570/newBlanja/T-shirt_ikcavv.png"
+                      src={photo}
                       className="card-img w-75 h-75 m-auto"
                       alt="..."
                     />
@@ -79,9 +112,7 @@ export default class Mybag extends Component {
                     style={{ alignItems: "center" }}
                   >
                     <div className="card-body">
-                      <h6 className="card-title font-weight-bold">
-                        Men's formal suit - Black
-                      </h6>
+                      <h6 className="card-title font-weight-bold">{name}</h6>
                       <p className="card-text">Zalora Cloth</p>
                     </div>
                   </div>
@@ -97,7 +128,7 @@ export default class Mybag extends Component {
                           </span>
                         </li>
                         <li style={{ margin: "0.9rem 1rem" }}>
-                          <span>1</span>
+                          <span>{qty}</span>
                         </li>
                         <li>
                           <span className="color-selected rounded-circle">
@@ -112,7 +143,7 @@ export default class Mybag extends Component {
                     style={{ alignItems: "center" }}
                   >
                     <div className="card-body">
-                      <h4 className="cost">$ 20.0</h4>
+                      <h4 className="cost">{price}</h4>
                     </div>
                   </div>
                 </div>
@@ -125,16 +156,23 @@ export default class Mybag extends Component {
                   <div className="price">
                     <p className="font-weight-bold d-inline">Total Price</p>
                     <p className="text-dark d-inline">
-                      <b>$ 20.0</b>
+                      <b>{price}</b>
                     </p>
                   </div>
                   <a href className="btn btn-buy d-xs-none">
                     buy
                   </a>
                   <div className="btn d-flex d-lg-none">
-                    <a href className="btnBtm btn-buy mt-2">
+                    {/* <a href className="btnBtm btn-buy mt-2">
                       Buy Now
-                    </a>
+                    </a> */}
+                    <Link
+                      to="/"
+                      onClick={this.handleBuy}
+                      className="btnBtm btn-buy mt-2"
+                    >
+                      Buy Now
+                    </Link>
                   </div>
                 </div>
               </div>

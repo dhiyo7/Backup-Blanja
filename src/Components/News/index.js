@@ -12,7 +12,7 @@ export default class Catalog extends Component {
   };
 
   getAllNewsProducts = () => {
-    const url = " https://a98489921bc3.ngrok.io/sorting?keyword=";
+    const url = "https://b2bd74521743.ngrok.io/sorting?keyword=";
     axios
       .get(url + "created_at DESC")
       .then((res) => {

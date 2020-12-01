@@ -12,7 +12,7 @@ export default class Popular extends Component {
     }
 
     getPopularProducts = () => {
-        const url = " https://a98489921bc3.ngrok.io/products/";
+        const url = "https://b2bd74521743.ngrok.io/products/";
     axios
       .get(url)
       .then((res) => {
