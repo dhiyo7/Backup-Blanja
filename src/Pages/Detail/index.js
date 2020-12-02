@@ -53,7 +53,6 @@ export default class Detail extends Component {
         <Container>
           <Popular />
         </Container>
-        <Modal/>
       </>
     );
   }

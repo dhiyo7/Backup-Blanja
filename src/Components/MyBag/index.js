@@ -8,35 +8,43 @@ import "./style.css";
 export default class Mybag extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      counter: 1,
+      price: parseInt(localStorage.getItem("price")),
+      totalPrice: parseInt(localStorage.getItem("price")),
+    };
+
+    this.handleCounterPlus = this.handleCounterPlus.bind(this);
+    this.handleCounterMin = this.handleCounterMin.bind(this);
     this.handleBuy = this.handleBuy.bind(this);
   }
-  // console.log(constructor);
+
+  handleCounterPlus = () => {
+    this.setState((state) => {
+      return {
+        counter: state.counter + 1,
+        totalPrice: state.totalPrice + state.price,
+      };
+    });
+  };
+
+  handleCounterMin = () => {
+    if (this.state.counter === 1) return;
+    this.setState((state) => {
+      return {
+        counter: state.counter - 1,
+        totalPrice: state.totalPrice - state.price,
+      };
+    });
+  };
 
   handleBuy = () => {
-    // const url = "https://b2bd74521743.ngrok.io/history";
-    // const url = "http://localhost:8005/history";
-    // const rand = 1 + Math.random() * (999 - 1);
-    // axios
-    //   .post(url, {
-    //     transaction_code: rand,
-    //     product_id: localStorage.getItem("id"),
-    //     qty: localStorage.getItem("qty"),
-    //     total: localStorage.getItem("price"),
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     localStorage.removeItem("id");
-    //     localStorage.removeItem("name");
-    //     localStorage.removeItem("photo");
-    //     localStorage.removeItem("qty");
-    //     localStorage.removeItem("price");
-    //   })
-    //   .catch((err) => console.log(err));
+    localStorage.setItem("totalPrice", this.state.totalPrice);
+    localStorage.setItem("qty", this.state.counter);
   };
 
   render() {
     const name = localStorage.getItem("name");
-    const qty = localStorage.getItem("qty");
     const price = localStorage.getItem("price");
     const photo = localStorage.getItem("photo");
     console.log(name);
@@ -124,17 +132,23 @@ export default class Mybag extends Component {
                     <div className="card-body">
                       <ul className="horizontal-list d-flex justify-center">
                         <li>
-                          <span className="color-selected rounded-circle bg-secondary">
+                          <button
+                            className="color-selected rounded-circle bg-secondary"
+                            onClick={this.handleCounterMin}
+                          >
                             <FontAwesomeIcon className="minus" icon={faMinus} />
-                          </span>
+                          </button>
                         </li>
                         <li style={{ margin: "0.9rem 1rem" }}>
-                          <span>{qty}</span>
+                          <span>{this.state.counter}</span>
                         </li>
                         <li>
-                          <span className="color-selected rounded-circle">
+                          <button
+                            className="color-selected rounded-circle"
+                            onClick={this.handleCounterPlus}
+                          >
                             <FontAwesomeIcon className="plus" icon={faPlus} />
-                          </span>
+                          </button>
                         </li>
                       </ul>
                     </div>
@@ -157,7 +171,7 @@ export default class Mybag extends Component {
                   <div className="price">
                     <p className="font-weight-bold d-inline">Total Price</p>
                     <p className="text-dark d-inline">
-                      <b>{price}</b>
+                      <b>{this.state.totalPrice}</b>
                     </p>
                   </div>
                   <div className="btn d-flex d-xs-none">

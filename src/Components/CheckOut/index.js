@@ -8,7 +8,7 @@ export default class Checkout extends Component {
   constructor(props) {
     super(props);
     this.handleCheckout = this.handleCheckout.bind(this);
-    console.log(this.handleCheckout.bind(this));
+    this.state = {totalPrice : parseInt(localStorage.getItem('totalPrice'))}
   }
 
   handleCheckout = () => {
@@ -19,7 +19,7 @@ export default class Checkout extends Component {
         transaction_code: rand,
         product_id: localStorage.getItem("id"),
         qty: localStorage.getItem("qty"),
-        total: localStorage.getItem("price"),
+        total: this.state.totalPrice,
       })
       .then((res) => {
         console.log(res);
@@ -28,6 +28,7 @@ export default class Checkout extends Component {
         localStorage.removeItem("photo");
         localStorage.removeItem("qty");
         localStorage.removeItem("price");
+        localStorage.removeItem("totalPrice");
       })
       .catch((err) => console.log(err));
       
@@ -114,7 +115,7 @@ export default class Checkout extends Component {
                   <div className="price">
                     <p className="font-weight-bold d-inline">Total Price</p>
                     <p className="text-dark d-inline">
-                      <b>{price}</b>
+                      <b>{this.state.totalPrice}</b>
                     </p>
                   </div>
                   <div className="btn d-flex d-xs-none">
