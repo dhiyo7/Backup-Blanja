@@ -11,9 +11,10 @@ export default function Router() {
     return (
         <BrowserRouter>
         <Route path="/" exact component={Home}/>
-        <Route path="/detail/:id" component={Detail}/>
         <Route path="/mybag" component={MyBag} />
         <Route path="/checkout" component={Checkout}/>
+        {/* <Route path="/category:id" component={}/> */}
+        <Route path="/detail/:id" component={Detail}/>
 
         </BrowserRouter>
     )

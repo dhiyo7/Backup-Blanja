@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Navbar from "../../Components/Navbar";
 import Details from "../../Components/Detail";
+import Popular from "../../Components/Popular";
+import Modal from "../../Components/Modal";
+import { Container } from "react-bootstrap";
 import axios from "axios";
 
 // const url = 'https://b2bd74521743.ngrok.io/products/'
@@ -35,7 +38,7 @@ export default class Detail extends Component {
       <>
         <Navbar />
         <Details
-          product={this.state.singleProduct.id}  
+          product={this.state.singleProduct.id}
           category={this.state.singleProduct.category_name}
           colorHex={this.state.singleProduct.color_hexa}
           conditions={this.state.singleProduct.conditions}
@@ -47,6 +50,10 @@ export default class Detail extends Component {
           rating={this.state.singleProduct.rating}
           size={this.state.singleProduct.size}
         />
+        <Container>
+          <Popular />
+        </Container>
+        <Modal/>
       </>
     );
   }

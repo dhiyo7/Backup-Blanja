@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import "./style.css";
 
 export default class Mybag extends Component {

@@ -1,9 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
-import { Container } from "react-bootstrap";
+import {
+  faStar,
+  faPlus,
+  faMinus,
+  faEdit,
+  faTrashAlt,
+} from "@fortawesome/free-solid-svg-icons";
+import { Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Modals from "../Modal";
 import "./style.css";
 
 export default class Detail extends Component {
@@ -12,10 +19,22 @@ export default class Detail extends Component {
     this.state = {
       size: 0,
       qty: 0,
+      show: false 
     };
 
     this.handleBag = this.handleBag.bind(this);
+    // this.handleUpdate = this.handleUpdate.bind(this);
   }
+
+  toggleModal() {
+    this.setState({ show: !this.state.show })
+}
+
+
+  // componentDidMount() {
+  //   this.refs.modal.show()
+  //   this.refs.modalhide()
+  // }
 
   handleBag = () => {
     // console.log(this.props)
@@ -23,11 +42,12 @@ export default class Detail extends Component {
     localStorage.setItem("name", this.props.name);
     localStorage.setItem("qty", this.props.qty);
     localStorage.setItem("price", this.props.price);
-    localStorage.setItem("id", this.props.product)
+    localStorage.setItem("id", this.props.product);
   };
 
   render() {
     const {
+      product,
       category,
       conditions,
       description,
@@ -38,6 +58,7 @@ export default class Detail extends Component {
       size,
       index,
     } = this.props;
+    console.log(product);
     return (
       <Container className="main">
         <p className="font-p-title">
@@ -49,7 +70,7 @@ export default class Detail extends Component {
             <div className="mt-3 more-images">
               <ul className="horizontal-list">
                 <li>
-                  <a href>
+                  <a href="#0">
                     <img
                       src={photo}
                       alt="img"
@@ -58,7 +79,7 @@ export default class Detail extends Component {
                   </a>
                 </li>
                 <li>
-                  <a href>
+                  <a href="#0">
                     <img
                       src={photo}
                       alt="img"
@@ -67,7 +88,7 @@ export default class Detail extends Component {
                   </a>
                 </li>
                 <li>
-                  <a href>
+                  <a href="#0">
                     <img
                       src={photo}
                       alt="img"
@@ -76,7 +97,7 @@ export default class Detail extends Component {
                   </a>
                 </li>
                 <li>
-                  <a href>
+                  <a href="#0">
                     <img
                       src={photo}
                       alt="img"
@@ -85,7 +106,7 @@ export default class Detail extends Component {
                   </a>
                 </li>
                 <li>
-                  <a href>
+                  <a href="#0">
                     <img
                       src={photo}
                       alt="img"
@@ -97,7 +118,23 @@ export default class Detail extends Component {
             </div>
           </div>
           <div className="col-sm-8">
-            <h3>{name}</h3>
+            <div className="d-flex">
+              <h3>{name}</h3>
+              {/* <Button onClick = {this.handleUpdate}> */}
+              <Button onClick={()=>this.toggleModal}>
+                <FontAwesomeIcon
+                  className="pencil ml-2"
+                  icon={faEdit}
+                />
+              </Button>
+              <Modals show={this.state.show} onClick={this.toggleModal}></Modals>
+
+              <FontAwesomeIcon
+                className="pencil ml-2"
+                icon={faTrashAlt}
+              />
+              {/* </Button> */}
+            </div>
             <p className="font-p-title ml-1">
               <b>{category}</b>
             </p>
@@ -122,20 +159,29 @@ export default class Detail extends Component {
               <li>
                 <span className="color-selected rounded-circle border border-danger">
                   <a
-                    href
+                    href="#0"
                     className="color-option rounded-circle"
                     style={{ backgroundColor: "black" }}
                   />
                 </span>
               </li>
               <li>
-                <a href className="color-option rounded-circle bg-danger"></a>
+                <a
+                  href="#0"
+                  className="color-option rounded-circle bg-danger"
+                ></a>
               </li>
               <li>
-                <a href className="color-option rounded-circle bg-primary"></a>
+                <a
+                  href="#0"
+                  className="color-option rounded-circle bg-primary"
+                ></a>
               </li>
               <li>
-                <a href className="color-option rounded-circle bg-success"></a>
+                <a
+                  href="#0"
+                  className="color-option rounded-circle bg-success"
+                ></a>
               </li>
             </ul>
             <div className="row justify-content-start">
@@ -181,12 +227,16 @@ export default class Detail extends Component {
               </div>
             </div>
             <div className="btnGrup d-flex justify-content-between">
-              <a href className="btnGrup btn-chart mt-2">
+              <a href="#0" className="btnGrup btn-chart mt-2">
                 Chart
               </a>
-              <a href className="btnGrup btn-add-bag mt-2">
+              <Link
+                to="/mybag"
+                className="btnGrup btn-add-bag mt-2"
+                onClick={this.handleBag}
+              >
                 Add bag
-              </a>
+              </Link>
               <Link
                 to="/mybag"
                 className="btnGrup btn-buy mt-2"
@@ -306,12 +356,16 @@ export default class Detail extends Component {
 
         {/* Menu Bottom */}
         <div className="btn d-flex d-lg-none">
-          <a href className="btnBtm btn-chart mt-2">
+          <a href="#0" className="btnBtm btn-chart mt-2">
             Chart
           </a>
-          <a href className="btnBtm btn-add-bag mt-2">
+          <Link
+            to="/mybag"
+            className="btnBtm btn-add-bag mt-2"
+            onClick={this.handleBag}
+          >
             Add bag
-          </a>
+          </Link>
           <Link
             to="/mybag"
             className="btnBtm btn-buy mt-2"

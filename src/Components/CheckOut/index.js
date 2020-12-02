@@ -77,7 +77,7 @@ export default class Checkout extends Component {
                     style={{ alignItems: "center" }}
                   >
                     <div className="card-body">
-                      <h6 className="card-title font-weight-bold">{this.props.name}</h6>
+                      <h6 className="card-title font-weight-bold">{name}</h6>
                       <p className="card-text">Zalora Cloth</p>
                     </div>
                   </div>
