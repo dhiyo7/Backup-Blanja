@@ -7,11 +7,11 @@ import "./style.css";
 import axios from "axios";
 
 export default class Popular extends Component {
-  intervalID;
+  intervalID
 
   state = {
-    popularProducts: [],
-  };
+    popularProducts: []
+  }
 
   getPopularProducts = async () => {
     // const url = "https://b2bd74521743.ngrok.io/products/";
@@ -21,18 +21,19 @@ export default class Popular extends Component {
       .then((res) => {
         const popularProducts = res.data.data;
         this.setState({ popularProducts });
-        this.intervalID = setTimeout(this.getPopularProducts.bind(this), 2000);
       })
       .catch((err) => err);
-  };
+  }
+
+  setPrice = (price) => {
+    localStorage.setItem('price', price)
+  }
 
   componentDidMount() {
-    this.getPopularProducts();
+    setTimeout(()=> {this.getPopularProducts()},1000)
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.intervalID);
-  }
+  
   render() {
     return (
       <>
@@ -51,10 +52,10 @@ export default class Popular extends Component {
         </div>
 
         <div className="row-catalog">
-          {this.state.popularProducts.map((popularProduct, id) => {
+          {this.state.popularProducts.map((popularProduct, id,) => {
             return (
               <div key={id} className="card card-catalog">
-                <Link to={`/detail/${popularProduct.id}`}>
+                <Link to={`/detail/${popularProduct.id}`} onClick={() => this.setPrice(popularProduct.product_price)}>
                   <img
                     src={popularProduct.product_photo}
                     alt=""
@@ -75,7 +76,8 @@ export default class Popular extends Component {
             );
           })}
         </div>
+
       </>
-    );
+    )
   }
 }

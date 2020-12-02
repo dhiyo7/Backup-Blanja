@@ -149,10 +149,6 @@ ul.horizontal-list li {
     color:white
 }
 
-.pencil{
-  color:gray
-}
-
 /* Small */
 @media (max-width: 767.98px) {
   .btn {

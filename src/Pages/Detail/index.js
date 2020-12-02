@@ -50,9 +50,9 @@ export default class Detail extends Component {
           rating={this.state.singleProduct.rating}
           size={this.state.singleProduct.size}
         />
-        <Container>
-          <Popular />
-        </Container>
+        {/* <Container>
+          <Popular style={{display:-1}} />
+        </Container> */}
       </>
     );
   }

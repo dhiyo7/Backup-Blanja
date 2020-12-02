@@ -1,12 +1,54 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { InputGroup, Navbar, FormControl } from "react-bootstrap";
+import {
+  InputGroup,
+  Navbar,
+  FormControl,
+  Modal,
+  Button,
+  Form,
+  Col,
+  Row,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faFilter } from "@fortawesome/free-solid-svg-icons";
 
 import "./style.css";
 
 export default class Navbarr extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      keyword: "",
+      showModal: false,
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleShow = this.handleShow.bind(this);
+    this.handleEnd = this.handleEnd.bind(this);
+  }
+
+  handleChange = (e) => {
+    this.setState({ keyword: e.target.value });
+    // console.log(e.target.value);
+  };
+
+  handleShow = (id) => {
+    this.setState(() => {
+      return {
+        showModal: true,
+      };
+    });
+  };
+
+  handleEnd = () => {
+    this.setState(() => {
+      return {
+        showModal: false,
+      };
+    });
+  };
+
   render() {
     return (
       <header className="header">
@@ -38,7 +80,7 @@ export default class Navbarr extends Component {
           </Link>
           <Navbar.Toggle />
           <div className="input-search input-search-field d-flex justify-content-end ml-5">
-            <InputGroup className="">
+            <InputGroup className="mb-5">
               <FormControl
                 placeholder="Search"
                 aria-label="Search"
@@ -50,22 +92,80 @@ export default class Navbarr extends Component {
             </InputGroup>
           </div>
           <div className="icon-filter">
-            <FontAwesomeIcon icon={faFilter} />
+            <Link style={{ color: "#9b9b9b" }} onClick={this.handleShow}>
+              <FontAwesomeIcon icon={faFilter} />
+            </Link>
           </div>
-          <Link to="/mybag" className="brand">
           <Navbar.Collapse className="justify-content-end">
-            <img
-              src={
-                "https://res.cloudinary.com/devloops7/image/upload/v1606580439/newBlanja/cart_s7fhsn.png"
-              }
-              style={{ marginRight: "40px", marginLeft: "20px" }}
-              alt=""
-            />
-            <div className="btn-login-nav">Login</div>
-            <div className="btn-signup-nav">Signup</div>
+            <Link to="/mybag" className="brand">
+              <img
+                src={
+                  "https://res.cloudinary.com/devloops7/image/upload/v1606580439/newBlanja/cart_s7fhsn.png"
+                }
+                style={{ marginRight: "40px", marginLeft: "20px" }}
+                alt=""
+              />
+            </Link>
+            <Link to="/login" className="btn-login-nav">
+              <div>Login</div>
+            </Link>
+            <Link to="/registration" className="btn-signup-nav">
+            <div>Signup</div>
+            </Link>
           </Navbar.Collapse>
-          </Link>
         </Navbar>
+        <Modal show={this.state.showModal} onHide={this.handleEnd}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group as={Row}>
+              <Form.Label as="legend" column sm={2}>
+                Filter
+              </Form.Label>
+              <Col sm={10}>
+                <Form.Check
+                  type="radio"
+                  label="Product Name"
+                  name="keyword"
+                  id="formHorizontalRadios1"
+                  value="product_name"
+                  onChange={(e) => this.handleChange(e)}
+                />
+                <Form.Check
+                  type="radio"
+                  label="Date"
+                  name="keyword"
+                  id="formHorizontalRadios2"
+                  value="created_at DESC"
+                  onChange={(e) => this.handleChange(e)}
+                />
+                <Form.Check
+                  type="radio"
+                  label="Product Price"
+                  name="keyword"
+                  id="formHorizontalRadios3"
+                  value="product_price"
+                  onChange={(e) => this.handleChange(e)}
+                />
+              </Col>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleEnd}>
+              Close
+            </Button>
+            <Link
+              variant="primary"
+              to={{
+                pathname: "/filter",
+                state: { keyword: this.state.keyword },
+              }}
+            >
+              Save Changes
+            </Link>
+          </Modal.Footer>
+        </Modal>
       </header>
     );
   }

@@ -1,7 +1,15 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faStar,
+  faPlus,
+  faMinus,
+  faPenSquare,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { Container, Modal, Button, Form } from "react-bootstrap";
+import Popular from "../Popular";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
@@ -13,6 +21,9 @@ export default class Detail extends Component {
     this.state = {
       size: 0,
       qty: 0,
+      counter: 1,
+      price: parseInt(localStorage.getItem("price")),
+      totalPrice: parseInt(localStorage.getItem("price")),
       showModal: false,
       product_id: null,
       product_name: "",
@@ -26,6 +37,9 @@ export default class Detail extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleCounterPlus = this.handleCounterPlus.bind(this);
+    this.handleCounterMin = this.handleCounterMin.bind(this);
+    this.handleBuy = this.handleBuy.bind(this);
   }
 
   handleDelete = (id) => {
@@ -36,10 +50,11 @@ export default class Detail extends Component {
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
-      if (willDelete) {
-        axios.delete(`http://localhost:8005/products/${id}`);
-        window.location = "/";
-      }
+      // if (willDelete) {
+      //   axios.delete(`http://localhost:8005/products/${id}`)
+      //   window.location = "/"
+      // }
+      console.log(this.props);
     });
   };
 
@@ -60,7 +75,6 @@ export default class Detail extends Component {
           product_desc: res.data.data.product_desc,
         };
       });
-      // console.log(res.data);
     });
   };
 
@@ -96,6 +110,34 @@ export default class Detail extends Component {
       .catch((err) => console.log(err));
   }
 
+  handleCounterPlus = () => {
+    this.setState((state) => {
+      return {
+        counter: state.counter + 1,
+        totalPrice: state.totalPrice + state.price,
+      };
+    });
+  };
+
+  handleCounterMin = () => {
+    if (this.state.counter === 1) return;
+    this.setState((state) => {
+      return {
+        counter: state.counter - 1,
+        totalPrice: state.totalPrice - state.price,
+      };
+    });
+  };
+
+  handleBuy = (id) => {
+    localStorage.setItem("totalPrice", this.state.totalPrice);
+    localStorage.setItem("qty", this.state.counter);
+    localStorage.setItem("photo", this.props.photo);
+    localStorage.setItem("name", this.props.name);
+    localStorage.setItem("price", this.props.price);
+    localStorage.setItem("id", this.props.product);
+  };
+
   render() {
     const {
       product,
@@ -105,7 +147,6 @@ export default class Detail extends Component {
       name,
       photo,
       price,
-      qty,
       size,
       index,
     } = this.props;
@@ -169,21 +210,33 @@ export default class Detail extends Component {
           </div>
           <div className="col-sm-8">
             <div className="d-flex">
-              <Button
+              <h3>{name}</h3>
+              {/* <Button
                 onClick={() => {
                   this.handleShow(product);
                 }}
-              >
-                <FontAwesomeIcon className="bintang" icon={faStar} />
-              </Button>
-              <Button
+              > */}
+              <FontAwesomeIcon
+                className="ml-2"
+                icon={faPenSquare}
+                onClick={() => {
+                  this.handleShow(product);
+                }}
+              />
+              {/* </Button> */}
+              {/* <Button
                 onClick={() => {
                   this.handleDelete(product);
                 }}
-              >
-                <FontAwesomeIcon className="bintang" icon={faMinus} />
-              </Button>
-              <h3>{name}</h3>
+              > */}
+              <FontAwesomeIcon
+                className="ml-2"
+                icon={faTrash}
+                onClick={() => {
+                  this.handleDelete(product);
+                }}
+              />
+              {/* </Button> */}
             </div>
             <p className="font-p-title ml-1">
               <b>{category}</b>
@@ -252,17 +305,23 @@ export default class Detail extends Component {
                 </p>
                 <ul className="horizontal-list d-flex justify-center">
                   <li>
-                    <span className="color-selected rounded-circle bg-secondary">
+                    <button
+                      className="color-selected rounded-circle bg-secondary"
+                      onClick={this.handleCounterMin}
+                    >
                       <FontAwesomeIcon className="minus" icon={faMinus} />
-                    </span>
+                    </button>
                   </li>
                   <li style={{ margin: "0.9rem 1rem" }}>
-                    <span>{qty}</span>
+                    <span>{this.state.counter}</span>
                   </li>
                   <li>
-                    <span className="color-selected rounded-circle">
+                    <button
+                      className="color-selected rounded-circle"
+                      onClick={this.handleCounterPlus}
+                    >
                       <FontAwesomeIcon className="plus" icon={faPlus} />
-                    </span>
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -271,39 +330,47 @@ export default class Detail extends Component {
               <a href className="btnGrup btn-chart mt-2">
                 Chart
               </a>
-              <a href className="btnGrup btn-add-bag mt-2">
-                Add bag
-              </a>
               <Link
                 to="/mybag"
-                className="btnGrup btn-buy mt-2"
+                className="btnGrup btn-add-bag mt-2"
                 onClick={this.handleBag}
+              >
+                Add Bag
+              </Link>
+              <Link
+                to="/checkout"
+                className="btnGrup btn-buy mt-2"
+                onClick={() => {
+                  this.handleBuy(product);
+                }}
               >
                 Buy Now
               </Link>
             </div>
           </div>
-        </div>
 
-        <h3 className="mt-3">Informasi Produk</h3>
-        <div>
-          <p className="mt-3 text-dark">
-            <b>Condition</b>
-          </p>
-          <p className="mt-n3 text-danger">
-            <b>{conditions}</b>
-          </p>
-          <p className="mt-4 text-dark">
-            <b>Description</b>
-          </p>
-          <p>{description}</p>
+          <div className="container">
+            <h3 className="mt-3">Informasi Produk</h3>
+            <div>
+              <p className="mt-3 text-dark">
+                <b>Condition</b>
+              </p>
+              <p className="mt-n3 text-danger">
+                <b>{conditions}</b>
+              </p>
+              <p className="mt-4 text-dark">
+                <b>Description</b>
+              </p>
+              <p>{description}</p>
+            </div>
+            <h2>Product Review</h2>
+          </div>
         </div>
-        <h2>Product Review</h2>
 
         <Container style={{ marginBottom: "70px" }}>
           <div className="row" key={index}>
             <div className="col-md-3 align-item-center justify-content-center">
-              <h1 className="display-1 d-inline">
+              <h1 className="d-1 d-inline">
                 <b>5.0</b>
               </h1>
               <p className="d-inline-block ml-1 mt-3 text-dark">
@@ -389,6 +456,7 @@ export default class Detail extends Component {
               </div>
             </div>
           </div>
+          <Popular />
         </Container>
 
         {/* Menu Bottom */}
@@ -396,16 +464,22 @@ export default class Detail extends Component {
           <a href className="btnBtm btn-chart mt-2">
             Chart
           </a>
-          <a href className="btnBtm btn-add-bag mt-2">
-            Add bag
-          </a>
           <Link
             to="/mybag"
-            className="btnBtm btn-buy mt-2"
+            className="btnBtm btn-add mt-2"
             onClick={this.handleBag}
           >
             {" "}
-            Buy Now{" "}
+            Add Bag
+          </Link>
+          <Link
+            to="/checkout"
+            className="btnBtm btn-buy mt-2"
+            onClick={() => {
+              this.handleBuy(product);
+            }}
+          >
+            Buy Now
           </Link>
         </div>
         <Modal show={this.state.showModal} onHide={this.handleEnd}>
