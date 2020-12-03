@@ -50,10 +50,10 @@ export default class Detail extends Component {
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
-      // if (willDelete) {
-      //   axios.delete(`http://localhost:8005/products/${id}`)
-      //   window.location = "/"
-      // }
+      if (willDelete) {
+        axios.delete(`http://localhost:8005/products/${id}`)
+        window.location = "/"
+      }
       console.log(this.props);
     });
   };
@@ -328,7 +328,7 @@ export default class Detail extends Component {
             </div>
             <div className="btnGrup d-flex justify-content-between">
               <a href className="btnGrup btn-chart mt-2">
-                Chart
+                Chat
               </a>
               <Link
                 to="/mybag"
@@ -374,7 +374,7 @@ export default class Detail extends Component {
                 <b>5.0</b>
               </h1>
               <p className="d-inline-block ml-1 mt-3 text-dark">
-                <b>/ 10</b>
+                <b>/ 5</b>
               </p>
               <div className="rating mt-n2 ml-1 d-flex">
                 <FontAwesomeIcon className="bintang" icon={faStar} />
@@ -462,11 +462,11 @@ export default class Detail extends Component {
         {/* Menu Bottom */}
         <div className="btn d-flex d-lg-none">
           <a href className="btnBtm btn-chart mt-2">
-            Chart
+            Chat
           </a>
           <Link
             to="/mybag"
-            className="btnBtm btn-add mt-2"
+            className="btnBtm btn-chart mt-2"
             onClick={this.handleBag}
           >
             {" "}
