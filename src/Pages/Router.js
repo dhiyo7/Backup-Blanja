@@ -7,8 +7,12 @@ import MyBag from "./MyBag";
 import Checkout from "./Checkout";
 import Category from "./Category";
 import Login from "./Login";
-import Registration from './Registratioin'
+import Registration from "./Registratioin";
 import Reset from "../Components/Reset";
+import MyProfile from './MyProfile';
+import SellingProduct from './SellingProduct';
+import MyProduct from './MyProduct';
+import MyOrder from './MyOrder';
 import Filter from "./Filter";
 
 export default function Router() {
@@ -22,6 +26,10 @@ export default function Router() {
       <Route path="/login" component={Login} />
       <Route path="/registration" component={Registration} />
       <Route path="/reset" component={Reset} />
+      <Route path="/my-profile-store" component={MyProfile} />
+      <Route path="/selling-product" component={SellingProduct} />
+      <Route path="/my-product" component={MyProduct} />
+      <Route path="/my-order" component={MyOrder} />
       <Route path="/filter" render={(props) => <Filter {...props} />} />
     </BrowserRouter>
   );
