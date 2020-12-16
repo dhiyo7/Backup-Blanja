@@ -16,7 +16,7 @@ class Login extends Component {
     axios
       .post("http://localhost:8007/auth/login", data)
       .then((res) => {
-        localStorage.setItem("token", res.data.data);
+        localStorage.setItem("token", res.data.data.token);
         res.headers["x-access-token"] = res.data.data;
         dispatch({ type: "LOGIN" });
         console.log(auth.isLogin);
@@ -49,7 +49,7 @@ class Login extends Component {
           <button className="btn-white">Custommer</button>
           <button className="btn-red">Seller</button>
         </div>
-        <form action="" className="form-login" onSubmit={this.handleSubmit}>
+        <form action="#" className="form-login" onSubmit={this.handleSubmit}>
           <input
             type="text"
             className="form-control w-100 rounded"
