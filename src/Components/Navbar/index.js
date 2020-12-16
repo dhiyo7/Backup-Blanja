@@ -12,10 +12,11 @@ import {
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faFilter } from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
 
 import "./style.css";
 
-export default class Navbarr extends Component {
+class Navbarr extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -106,9 +107,20 @@ export default class Navbarr extends Component {
                 alt=""
               />
             </Link>
-            <Link to="/login" className="btn-login-nav">
+            {
+              this.props.auth.username == null ?
+              <Link to="/login" className="btn-login-nav">
               <div>Login</div>
             </Link>
+
+            :
+
+            <Link to="/my-profile-store" className="btn-login-nav">
+            <div>My Profile</div>
+          </Link>
+
+            }
+
             <Link to="/registration" className="btn-signup-nav">
             <div>Signup</div>
             </Link>
@@ -170,3 +182,11 @@ export default class Navbarr extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+
+export default connect(mapStateToProps)(Navbarr);

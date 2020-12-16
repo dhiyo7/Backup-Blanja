@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Jumbotron, Button, Form, Row, Col } from "react-bootstrap";
 import Sidebar from "../sidebarProduct";
 import './style.css'
+import { connect } from "react-redux";
 
-export default class MyProfile extends Component {
+class MyProfile extends Component {
     render() {
         return (
             <div style={{ display: "flex" }}>
@@ -77,3 +78,13 @@ export default class MyProfile extends Component {
         );
     }
 }
+
+
+const mapStateToProps = ({ auth }) => {
+    return {
+      auth,
+    };
+  };
+  
+export default connect(mapStateToProps)(MyProfile);
+  

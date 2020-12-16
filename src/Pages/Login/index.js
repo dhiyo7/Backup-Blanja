@@ -17,8 +17,12 @@ class Login extends Component {
       .post("http://localhost:8007/auth/login", data)
       .then((res) => {
         localStorage.setItem("token", res.data.data.token);
+        localStorage.setItem("username", res.data.data.username);
         res.headers["x-access-token"] = res.data.data;
-        dispatch({ type: "LOGIN" });
+        dispatch({ type: "LOGIN", payload : {
+          token: res.data.data.token,
+          username: res.data.data.username
+        } });
         console.log(auth.isLogin);
         console.log(this.props.auth);
         console.log(res);
