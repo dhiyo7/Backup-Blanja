@@ -18,11 +18,15 @@ export default class Detail extends Component {
     const { match } = this.props;
 
     axios
-      .get(url + match.params.id)
+      .get(url + match.params.id, {
+        headers: {
+          "x-access-token": "Bearer "+ localStorage.getItem('token'),
+        },
+      })
       .then((res) => {
         const singleProduct = res.data.data;
         this.setState({ singleProduct });
-        // console.log(singleProduct);
+        console.log(singleProduct);
       })
       .catch((err) => console.log(err));
   };

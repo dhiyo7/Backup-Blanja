@@ -56,7 +56,7 @@ export default class Catalog extends Component {
               <div key={id} className="card card-catalog">
                 <Link to={`/detail/${productNew.id}`} onClick={()=> this.setPrice(productNew.product_price)}>
                   <img
-                    src={productNew.product_photo}
+                    src={JSON.parse(productNew.product_photo).shift()}
                     alt=""
                     className="card-img-top img-news"
                     width="238"

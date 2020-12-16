@@ -15,11 +15,11 @@ export default class Popular extends Component {
 
   getPopularProducts = async () => {
     // const url = "https://b2bd74521743.ngrok.io/products/";
-    const url = "http://localhost:8000/products/";
+    const url = "http://localhost:8007/products/";
     await axios
       .get(url)
       .then((res) => {
-        const popularProducts = res.data.data;
+        const popularProducts = res.data.data.products;
         this.setState({ popularProducts });
       })
       .catch((err) => err);
@@ -57,7 +57,8 @@ export default class Popular extends Component {
               <div key={id} className="card card-catalog">
                 <Link to={`/detail/${popularProduct.id}`} onClick={() => this.setPrice(popularProduct.product_price)}>
                   <img
-                    src={popularProduct.product_photo}
+                    // src={popularProduct.product_photo}
+                    src={JSON.parse(popularProduct.product_photo).shift()}
                     alt=""
                     className="card-img-top img-news"
                     width="238"

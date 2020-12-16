@@ -7,9 +7,34 @@ const initialState = {
   username : localStorage.getItem('username'),
 }
 
+const initialProductState = {
+  allProducts: [],
+  myProducts: [],
+};
+
 const reducers = combineReducers({
   // key => nama Reducer
   // value => fungsi Reducer
+
+  product: (state = initialProductState, action) => {
+    switch (action.type) {
+      case "GET_ALL_PRODUCT":
+        return {
+          ...state,
+          allProduct: action.payload.allProducts,
+        };
+      case "GET_MY_PRODUCT":
+        return {
+          ...state,
+          myProduct: action.payload.myProducts,
+        };
+      default:
+        return {
+          ...state,
+        };
+    }
+  },
+
   auth: (state = initialState, action) => {
     switch (action.type) {
       case "LOGIN":

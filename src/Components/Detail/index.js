@@ -14,8 +14,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
 import "./style.css";
+import { connect } from "react-redux";
 
-export default class Detail extends Component {
+
+class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -101,6 +103,9 @@ export default class Detail extends Component {
     const url = `http://localhost:8007/products/${this.state.product_id}`;
     axios
       .put(url, {
+        headers: {
+          "x-access-token": "Bearer "+ localStorage.getItem('token'),
+        },
         product_name: this.state.product_name,
         product_price: this.state.product_price,
         product_qty: this.state.product_qty,
@@ -554,3 +559,12 @@ export default class Detail extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+
+export default connect(mapStateToProps)(Detail);
+
