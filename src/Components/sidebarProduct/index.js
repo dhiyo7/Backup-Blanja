@@ -5,8 +5,9 @@ import { Card, Accordion, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faAngleDown, faHome, faCube } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
+import { connect } from "react-redux";
 
-export default class Sidebar extends Component {
+class Sidebar extends Component {
 
   render() {
     return (
@@ -18,7 +19,7 @@ export default class Sidebar extends Component {
                 <img className="img-profil" alt="" />
               </div>
               <div className="ml-4">
-                <p>Johanes Mikael</p>
+                <p>{this.props.auth.username ? this.props.auth.username : "Johanes Mikael"}</p>
                 <div className="d-flex margin-up">
                   <div className="mr-1">
                     <FontAwesomeIcon icon={faPen} />
@@ -93,3 +94,12 @@ export default class Sidebar extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+
+export default connect(mapStateToProps)(Sidebar);
+

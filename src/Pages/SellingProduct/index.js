@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Navbar from "../../Components/Navbar2nd";
 import SellingProducts from "../../Components/SellingProduct"
+import { connect } from "react-redux";
 
 
-export default class SellingProduct extends Component {
+class SellingProduct extends Component {
     render() {
         return (
             <>
@@ -13,3 +14,13 @@ export default class SellingProduct extends Component {
         );
     }
 }
+
+const mapStateToProps = ({ auth }) => {
+    return {
+      auth,
+    };
+  };
+  
+export default connect(mapStateToProps)(SellingProduct);
+  
+  
