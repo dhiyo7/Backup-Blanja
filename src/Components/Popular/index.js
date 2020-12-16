@@ -15,7 +15,7 @@ export default class Popular extends Component {
 
   getPopularProducts = async () => {
     // const url = "https://b2bd74521743.ngrok.io/products/";
-    const url = "http://localhost:8005/products/";
+    const url = "http://localhost:8007/products/";
     await axios
       .get(url)
       .then((res) => {

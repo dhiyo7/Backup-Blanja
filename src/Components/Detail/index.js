@@ -51,7 +51,7 @@ export default class Detail extends Component {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        axios.delete(`http://localhost:8005/products/${id}`)
+        axios.delete(`http://localhost:8007/products/${id}`)
         window.location = "/"
       }
       console.log(this.props);
@@ -65,7 +65,7 @@ export default class Detail extends Component {
       };
     });
 
-    axios.get(`http://localhost:8005/products/${id}`).then((res) => {
+    axios.get(`http://localhost:8007/products/${id}`).then((res) => {
       this.setState(() => {
         return {
           product_id: res.data.data.id,
@@ -98,7 +98,7 @@ export default class Detail extends Component {
   };
 
   handleSubmit() {
-    const url = `http://localhost:8005/products/${this.state.product_id}`;
+    const url = `http://localhost:8007/products/${this.state.product_id}`;
     axios
       .put(url, {
         product_name: this.state.product_name,

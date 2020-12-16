@@ -7,7 +7,7 @@ import { Container } from "react-bootstrap";
 import axios from "axios";
 
 // const url = 'https://b2bd74521743.ngrok.io/products/'
-const url = " http://localhost:8005/products/";
+const url = " http://localhost:8007/products/";
 
 export default class Detail extends Component {
   state = {

@@ -15,7 +15,7 @@ export default class Catalog extends Component {
 
   getAllNewsProducts = () => {
     // const url = "https://b2bd74521743.ngrok.io/sorting?keyword=";
-    const url = "http://localhost:8005/sorting?keyword=";
+    const url = "http://localhost:8007/sorting?keyword=";
     axios
       .get(url + "created_at DESC")
       .then((res) => {
