@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 
 class Login extends Component {
   handleSubmit = (e) => {
+    e.preventDefault()
     const { dispatch, auth } = this.props;
     const data = {
       username: this.username,
@@ -23,6 +24,7 @@ class Login extends Component {
           token: res.data.data.token,
           username: res.data.data.username
         } });
+
         console.log(auth.isLogin);
         console.log(this.props.auth);
         console.log(res);
@@ -53,7 +55,7 @@ class Login extends Component {
           <button className="btn-white">Custommer</button>
           <button className="btn-red">Seller</button>
         </div>
-        <form action="#" className="form-login" onSubmit={this.handleSubmit}>
+        <form className="form-login" onSubmit={this.handleSubmit}>
           <input
             type="text"
             className="form-control w-100 rounded"
@@ -71,7 +73,7 @@ class Login extends Component {
               Forgot password?
             </a>
           </p>
-          <button className="btn-login">PRIMARY</button>
+          <button className="btn-login" type="submit">PRIMARY</button>
         </form>
         <p className="font-account">
           Don't have a Tokopedia account?

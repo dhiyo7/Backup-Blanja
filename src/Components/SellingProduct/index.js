@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Jumbotron, Button, Form, Row, Col } from "react-bootstrap";
 import Sidebar from "../sidebarProduct";
 import axios from "axios";
@@ -17,21 +17,55 @@ export default function SellingProduct() {
 
   //karo status_product_id kwe apa yah?
   //njaluk diisi soale..
+
+  const [categories, setCategories] = useState([]);
+  const [size, setSize] = useState([]);
+  const [color, setColor] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8007/categories')
+      .then((response) => {
+        setCategories(response.data.data);
+        // console.log(response.data.data);
+      })
+      .catch((err) => console.log(err))
+
+    axios.get('http://localhost:8007/sizes')
+      .then((response) => {
+        setSize(response.data.data);
+      })
+      .catch((err) => console.log(err))
+
+    axios.get('http://localhost:8007/colors')
+      .then((response) => {
+        setColor(response.data.data);
+      })
+      .catch((err) => console.log(err))
+  }, [])
+
+  useEffect(() => { })
+
   const [productToSend, setProductToSend] = useState({
-    product_name: "Cek Lagi",
-    category_id: 14,
-    size_id: 2,
-    user_id: 2,
+    product_name: '',
+    category_id: '',
+    size_id: '',
     status_product_id: 3,
-    color_id: 2,
-    condition_id: 1,
-    product_price: 15000,
-    product_qty: 20,
-    product_desc: "Example of product desc",
+    user_id: auth.user_id,
+    color_id: '',
+    condition_id: '',
+    product_price: '',
+    product_qty: '',
+    product_desc: '',
   });
 
   //untuk saat ini dipisah, biar gampang debugging nya
   const [productImages, setProductImages] = useState([]);
+
+  const handleChange = (e) => {
+    setProductToSend({...productToSend, [e.target.name] : e.target.value})
+    console.log(auth);
+    console.log(productToSend);
+  }
 
   const handleSelectedFiles = (images) => {
     // console.log(images.target.files)
@@ -45,7 +79,7 @@ export default function SellingProduct() {
 
   //example...
   const postProduct = async () => {
-    if (productImages.length == 0) {
+    if (productImages.length === 0) {
       console.log("Insert image first");
       return;
     }
@@ -60,7 +94,7 @@ export default function SellingProduct() {
     const res = await axios
       .post("http://localhost:8007/products", formData, {
         headers: {
-          "x-access-token": `Bearer ${auth.token}`,
+          "x-access-token": `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data",
         },
       })
@@ -95,14 +129,40 @@ export default function SellingProduct() {
                     Name of goods
                   </Form.Label>
                   <Form.Control
-                    onChange={(v) =>
-                      setProductToSend({
-                        ...productToSend,
-                        product_name: v.target.value,
-                      })
-                    }
-                    placeholder=""
+                    onChange={handleChange}
+                    placeholder="Enter your product name"
+                    name="product_name"
                   />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control as="select" style={{ fontSize: '12px' }} onChange={handleChange} name="category_id">
+                    <option value="">-- Choose Category --</option>
+                    {categories.map((category) => {
+                      return (
+                        <option value={category.id}>{category.category_name}</option>
+                      )
+                    })}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control as="select" style={{ fontSize: '12px' }}  onChange={handleChange} name="size_id">
+                    <option value="">-- Choose Size --</option>
+                    {size.map((size) => {
+                      return (
+                        <option value={size.id}>{size.size}</option>
+                      )
+                    })}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control as="select" style={{ fontSize: '12px' }}  onChange={handleChange} name="color_id">
+                    <option value="">-- Choose Color --</option>
+                    {color.map((color) => {
+                      return (
+                        <option value={color.id}>{color.color_name}</option>
+                      )
+                    })}
+                  </Form.Control>
                 </Form.Group>
               </div>
             </div>
@@ -119,13 +179,8 @@ export default function SellingProduct() {
                     //mohon untuk validasi integer angka sendiri
                   }
                   <Form.Control
-                    onChange={(v) =>
-                      setProductToSend({
-                        ...productToSend,
-                        product_price: v.target.value,
-                      })
-                    }
-                    placeholder=""
+                     onChange={handleChange} name="product_price"
+                    placeholder="Enter product price"
                   />
                 </Form.Group>
                 <Form.Group controlId="formGridAddress1">
@@ -134,12 +189,7 @@ export default function SellingProduct() {
                     //mohon untuk validasi integer stock
                   }
                   <Form.Control
-                    onChange={(v) =>
-                      setProductToSend({
-                        ...productToSend,
-                        product_qty: v.target.value,
-                      })
-                    }
+                     onChange={handleChange} name="product_qty"
                     placeholder="Buah"
                   />
                 </Form.Group>
@@ -155,7 +205,7 @@ export default function SellingProduct() {
                       column
                       sm={2}
                     >
-                      Stock
+                    Condition
                     </Form.Label>
                     <Col className="mt-1">
                       <Form.Check
@@ -163,6 +213,9 @@ export default function SellingProduct() {
                         label="Baru"
                         name="formHorizontalRadios"
                         id="formHorizontalRadios1"
+                        onClick={handleChange}
+                        name="condition_id"
+                        value="1"
                       />
                     </Col>
                     <Col className="mt-1">
@@ -171,6 +224,9 @@ export default function SellingProduct() {
                         label="Bekas"
                         name="formHorizontalRadios"
                         id="formHorizontalRadios2"
+                        onClick={handleChange}
+                        name="condition_id"
+                        value="2"
                       />
                     </Col>
                   </Form.Group>
@@ -212,14 +268,14 @@ export default function SellingProduct() {
           <Jumbotron className="container-gap">
             <h3>Description</h3>
             <hr></hr>
-
+            <Form.Control as="textarea" rows={5} onChange={handleChange} name="product_desc" />
             <div className="row">
               <div className="col-md-8"></div>
             </div>
           </Jumbotron>
           <div className="container-btn d-flex justify-content-end mb-5">
-            <div onClick={() => postProduct()} className="btn-login-nav">
-              Jual
+            <div>
+              <Button onClick={() => postProduct()} className="btn-login-nav">Jual</Button>
             </div>
           </div>
         </Form>

@@ -12,7 +12,7 @@ export default class Checkout extends Component {
   }
 
   handleCheckout = () => {
-    const url = "http://localhost:8005/history";
+    const url = "http://localhost:8007/history";
     const rand = 1 + Math.random() * (999 - 1);
     axios
       .post(url, {
@@ -20,6 +20,9 @@ export default class Checkout extends Component {
         product_id: localStorage.getItem("id"),
         qty: localStorage.getItem("qty"),
         total: this.state.totalPrice,
+        headers: {
+          "x-access-token": "Bearer "+ localStorage.getItem('token'),
+        },
       })
       .then((res) => {
         console.log(res);

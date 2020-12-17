@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import { Navbar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faEnvelope, faUser } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
 
-export default class Navbar2nd extends Component {
+class Navbar2nd extends Component {
 
   render() {
     return (
       <>
         <header className="header">
           <Navbar className="container" fixed="top" bg="white">
-            <div className="brand d-lg-none">
-              <Navbar.Brand href="#home">
+            <div className="brand d-lg-none" >
+              <Navbar.Brand>
                 <img
                   src="https://res.cloudinary.com/devloops7/image/upload/v1606499947/newBlanja/VectorlogoKecil_ijoj9p.png"
                   width="30"
@@ -24,8 +24,8 @@ export default class Navbar2nd extends Component {
                 />
               </Navbar.Brand>
             </div>
-            <div className="brand2">
-              <Navbar.Brand href="#home">
+            <div className="brand2" onClick= {() => this.props.history.push('/')}>
+              <Navbar.Brand >
                 <img
                   src="https://res.cloudinary.com/devloops7/image/upload/v1606499947/newBlanja/VectorlogoBesar_vobugk.png"
                   width="30"
@@ -50,3 +50,5 @@ export default class Navbar2nd extends Component {
     );
   }
 }
+
+export default withRouter(Navbar2nd)
